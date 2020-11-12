@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  background-color: whitesmoke;
+}
+.input {
+  display: flex;
+  flex-direction: row;
+  margin: 5em auto;
+  background-color: white;
+}
