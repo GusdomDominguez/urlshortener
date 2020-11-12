@@ -23,7 +23,7 @@ function UrlShortener() {
       .then(function (response) {
         // handle success
         console.log(response.data);
-        setData(response.data);
+        setData(Object.entries(response.data));
       })
       .catch(function (error) {
         // handle error
@@ -32,6 +32,7 @@ function UrlShortener() {
   }, []);
 
   const handleSubmit = () => {
+    console.log(data);
     axios
       .post("http://localhost:3000/", {
         url: url,
@@ -64,11 +65,13 @@ function UrlShortener() {
       </div>
       <div>
         <List component="nav" aria-label="main mailbox folders">
-          {array.map((e) => (
-            <ListItem button>
-              <ListItemText primary={e} />
-            </ListItem>
-          ))}
+          {data
+            ? data.map((e) => (
+                <ListItem button>
+                  <ListItemText primary={e[0]} />
+                </ListItem>
+              ))
+            : null}
         </List>
       </div>
     </div>
