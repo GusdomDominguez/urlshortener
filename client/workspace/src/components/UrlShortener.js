@@ -7,7 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import axios from "axios";
 
-function HelloWorld() {
+function UrlShortener() {
   const array = [
     "www.asd.com",
     "www.bvgfd.com",
@@ -74,4 +74,4 @@ function HelloWorld() {
     </div>
   );
 }
-export default HelloWorld;
+export default UrlShortener;

@@ -1,9 +1,9 @@
 import "./App.css";
-import HelloWorld from "./components/HelloWorld";
+import UrlShortener from "./components/UrlShortener";
 function App() {
   return (
     <div className="App">
-      <HelloWorld />
+      <UrlShortener />
     </div>
   );
 }
