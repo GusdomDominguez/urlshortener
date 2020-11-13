@@ -11,12 +11,26 @@ router.get("/", (req, res) => {
   res.json(resData);
 });
 
+router.get("/url/:code", (req, res) => {
+  const code = req.params.code;
+  const url = store.get(code);
+  res.redirect(`http://${url}`);
+});
+
 router.post("/", function (req, res) {
   console.log(req.body);
-  const testdata =
-    req.body && req.body.testdata ? req.body.testdata : "empty data";
-  store.set(req.body.testdata, { testdata });
-  res.send("Data saved");
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < 8; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  store.set(result, req.body.url);
+  res.send({
+    success: true,
+    message: `Url acortada en localhost:3000/${result}`,
+  });
 });
 
 module.exports = router;

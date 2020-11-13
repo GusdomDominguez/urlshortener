@@ -5,40 +5,50 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import axios from "axios";
-
+import MyTable from "./MyTable";
 function UrlShortener() {
-  const array = [
-    "www.asd.com",
-    "www.bvgfd.com",
-    "www.vbnnvb.com",
-    "www.bcvcvb.com",
-  ];
   const [data, setData] = useState([]);
   const [url, setUrl] = useState("");
+  const [open, setOpen] = React.useState(false);
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/")
       .then(function (response) {
         // handle success
-        console.log(response.data);
         setData(Object.entries(response.data));
       })
       .catch(function (error) {
         // handle error
         console.log(error);
       });
-  }, []);
+  }, [url]);
 
   const handleSubmit = () => {
-    console.log(data);
     axios
       .post("http://localhost:3000/", {
         url: url,
       })
       .then((response) => {
-        console.log(response);
+        setOpen(true);
+        setUrl("");
       })
       .catch((err) => console.log(err));
   };
@@ -47,7 +57,7 @@ function UrlShortener() {
   };
   return (
     <div className={styles.container}>
-      <h2>ACORTADOR DE URL'S</h2>
+      <h2 style={{ fontSize: "4em" }}>ACORTADOR DE URL'S</h2>
       <div className={styles.input}>
         <TextField
           id="outlined-basic"
@@ -64,16 +74,13 @@ function UrlShortener() {
         </Button>
       </div>
       <div>
-        <List component="nav" aria-label="main mailbox folders">
-          {data
-            ? data.map((e) => (
-                <ListItem button>
-                  <ListItemText primary={e[0]} />
-                </ListItem>
-              ))
-            : null}
-        </List>
+        <MyTable data={data} />
       </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          La url ha sido acortada!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

@@ -7,6 +7,6 @@
 .input {
   display: flex;
   flex-direction: row;
-  margin: 5em auto;
+  margin: 1em auto;
   background-color: white;
 }
